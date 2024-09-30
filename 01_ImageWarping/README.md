@@ -57,8 +57,6 @@ python run_point_transform.py
 #### Result 2:
 <img src="pics/teaser_2.PNG" alt="alt text" width="500">
 
-#### Result 3:
-<img src="pics/point_demo.gif" alt="alt text" width="500">
 
 ## Acknowledgement
 
