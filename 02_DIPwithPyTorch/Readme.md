@@ -11,8 +11,14 @@
 ---
 
 ## Implementation of Poisson Image Editing with PyTorch
+
+### Equation
+
+### Monolisa
 <img src="pics/Results1.PNG" alt="alt text" width="800">
-使用laplacian kernel直接融合得到的结果在背景纹理信息上表现不佳，因此也尝试使用了Sobel kernel混合梯度；同时发现相较于论文结果，部分区域过渡不自然，算法对mask要求高。
+使用laplacian kernel直接融合得到的结果在背景纹理信息上表现不佳，因此也尝试使用了Sobel kernel混合梯度，暂时未调试成功；同时发现相较于论文结果，部分区域过渡不自然，算法对mask要求高。
+
+### Water
 
 ## Implementation of Pix2Pix with PyTorch
 ### Results (need add more result images)
