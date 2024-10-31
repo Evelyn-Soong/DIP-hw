@@ -12,7 +12,7 @@
 
 ## Implementation of Poisson Image Editing with PyTorch
 使用laplacian kernel直接融合得到的结果在背景纹理信息上表现不佳，在Equation和Monolisa中可以明显观察到这种情况。因此尝试使用融合散度，计算source和target四个方向的梯度，取绝对值大的一方作为最终梯度。不过目前在Monolisa上没有实现出应该有的效果，待后续debug。
-在实验中发现，对于source和target大小不一致的情况，需要进行填充；采用同样的代码warter跑出来的结果，source若隐若现，几乎看不到，猜测Mixing Gradients可能有助于改善这种情况。
+同样的代码warter跑出来的结果较差，尝试了一些修改但是没有显著提高。
 ### Equation
 <img src="pics/Results2.PNG" alt="alt text" width="800">
 
@@ -27,17 +27,18 @@
 <img src="pics/Results3.PNG" alt="alt text" width="800">
 
 ## Implementation of Pix2Pix with PyTorch
-在小样本facades数据集上训练，后期loss几乎无法下降并且最后结果(Train loss:0.6045 Val Loss:0.6278)是较大样本cityscapes数据集结果(Train loss:0.3895 Val Loss:0.4034)的1.5倍左右。从最后结果上来看，继续增加训练Epoch可能提升效果有限，应该采用一个更大的网络结构。
+1、首先尝试在小网络上进行训练，最终效果较差，facades数据集训练中后期loss几乎无法下降；
+2、在更大的网络结构上两个数据集都得到了更好的效果，facades数据集泛化能力差(Train loss:0.0675 Val Loss:0.3776)，cityscapes数据集(Train loss:0.0394 Val Loss:0.1172)在训练集、验证集上都具有更好的表现。
 ### facades (400 images)
 #### Train Results
-<img src="pics/facades_train_1.png" alt="alt text" width="800">
+<img src="pics/facades_train_2.png" alt="alt text" width="800">
 
 #### Val Results
-<img src="pics/facades_val_1.png" alt="alt text" width="800">
+<img src="pics/facades_val_2.png" alt="alt text" width="800">
 
 ### cityscapes (2975 images)
 #### Train Results
-<img src="pics/cityscapes_train_1.png" alt="alt text" width="800">
+<img src="pics/cityscapes_train_2.png" alt="alt text" width="800">
 
 #### Val Results
-<img src="pics/cityscapes_val_1.png" alt="alt text" width="800">
+<img src="pics/cityscapes_val_2.png" alt="alt text" width="800">
