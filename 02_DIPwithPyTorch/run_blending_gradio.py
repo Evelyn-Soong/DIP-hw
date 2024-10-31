@@ -126,7 +126,7 @@ def create_mask_from_points(points, img_h, img_w):
 
 
 # Calculate the Laplacian loss between the foreground and blended image
-def cal_laplacian_loss(foreground_img, foreground_mask, blended_img, background_mask, flag=0):
+def cal_laplacian_loss(foreground_img, foreground_mask, blended_img, background_mask, flag=1):
     """
     Computes the Laplacian loss between the foreground and blended images within the masks.
 
@@ -168,10 +168,18 @@ def cal_laplacian_loss(foreground_img, foreground_mask, blended_img, background_
         bg_laplacian = torch.nn.functional.conv2d(blended_img, laplace_kernel, padding=1, groups=num_channels)
 
         # Expand the foreground mask to match the number of channels in the image
-        foreground_mask_expanded = foreground_mask.expand(-1, num_channels, -1, -1)
+        foreground_mask_expanded = foreground_mask.expand(-1, num_channels, -1, -1).bool()
+        background_mask_expanded = background_mask.expand(-1, num_channels, -1, -1).bool()
+
+        # Apply the masks to the Laplacian results
+        fg_laplacian_masked = fg_laplacian[foreground_mask_expanded]
+        bg_laplacian_masked = bg_laplacian[background_mask_expanded]
 
         # Compute the loss only in the region where the foreground mask is active
-        loss = torch.mean((fg_laplacian - bg_laplacian) ** 2 * foreground_mask_expanded)
+        # loss = torch.mean((fg_laplacian - bg_laplacian) ** 2 * foreground_mask_expanded)
+        # Compute the loss using MSELoss
+        mse_loss = torch.nn.MSELoss()
+        loss = mse_loss(fg_laplacian_masked, bg_laplacian_masked)
 
     else:
         # Define kernels for gradient computation in four directions
@@ -203,8 +211,8 @@ def cal_laplacian_loss(foreground_img, foreground_mask, blended_img, background_
         final_grad = torch.sum(torch.stack(grads), dim=0)
 
         # Apply the foreground mask
-        foreground_mask_expanded = foreground_mask.expand(-1, num_channels, -1, -1)
-        final_grad *= foreground_mask_expanded
+        foreground_mask_expanded = foreground_mask.expand(-1, num_channels, -1, -1).bool()
+        final_grad = final_grad[foreground_mask_expanded]
 
         # Sum up the gradients in both directions
         loss = torch.mean(final_grad)
