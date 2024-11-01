@@ -14,15 +14,11 @@
 
 Fill the [Polygon to Mask function](run_blending_gradio.py#L102) and the [Laplacian Distance Computation](run_blending_gradio.py#L146) of 'run_blending_gradio.py'.
 
-使用laplacian kernel直接融合得到的结果在背景纹理信息上表现不佳，在Monolisa中可以明显观察到这种情况。因此尝试使用融合散度，计算source和target四个方向的梯度，取绝对值大的一方作为最终梯度。在Monolisa完成测试，最终融合效果有显著提升。
+使用laplacian kernel直接融合得到的结果在背景纹理信息上表现不佳，在Monolisa中可以明显观察到这种情况。因此尝试使用融合散度，计算source和target四个方向的梯度，取绝对值大的一方作为最终梯度。在Monolisa完成测试，暂时没有实现比较好的提升效果，待后续debug。
 ### Equation
 <img src="pics/Results2.PNG" alt="alt text" width="800">
 
 ### Monolisa
-#### Laplacian kernel
-<img src="pics/Results1.PNG" alt="alt text" width="800">
-
-#### kernels for gradient computation in four directions
 <img src="pics/Results4.PNG" alt="alt text" width="800">
 
 ### Water
