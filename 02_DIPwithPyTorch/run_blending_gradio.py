@@ -126,7 +126,7 @@ def create_mask_from_points(points, img_h, img_w):
 
 
 # Calculate the Laplacian loss between the foreground and blended image
-def cal_laplacian_loss(foreground_img, foreground_mask, blended_img, background_mask, flag=1):
+def cal_laplacian_loss(foreground_img, foreground_mask, blended_img, background_mask, flag=0):
     """
     Computes the Laplacian loss between the foreground and blended images within the masks.
 
@@ -195,6 +195,10 @@ def cal_laplacian_loss(foreground_img, foreground_mask, blended_img, background_
         kernel_y_pos = kernel_y_pos.repeat(num_channels, 1, 1, 1)
         kernel_y_neg = kernel_y_neg.repeat(num_channels, 1, 1, 1)
 
+        # Apply the mask
+        foreground_mask_expanded = foreground_mask.expand(-1, num_channels, -1, -1).bool()
+        background_mask_expanded = background_mask.expand(-1, num_channels, -1, -1).bool()
+
         # Compute gradients in four directions
         grads = []
         for kernel in [kernel_x_pos, kernel_x_neg, kernel_y_pos, kernel_y_neg]:
@@ -204,15 +208,13 @@ def cal_laplacian_loss(foreground_img, foreground_mask, blended_img, background_
             dst_grad = torch.nn.functional.conv2d(blended_img, kernel,
                                                   padding=(kernel.size(2) // 2, kernel.size(3) // 2),
                                                   groups=num_channels)
-            grads.append(torch.where(torch.abs(src_grad) > torch.abs(dst_grad),
-                                     src_grad ** 2, dst_grad ** 2))
+
+            src_grad = src_grad[foreground_mask_expanded]
+            dst_grad = dst_grad[background_mask_expanded]
+            grads.append(torch.where(torch.abs(src_grad) > torch.abs(dst_grad), src_grad ** 2, dst_grad ** 2))
 
         # Sum up the gradients from all directions
         final_grad = torch.sum(torch.stack(grads), dim=0)
-
-        # Apply the foreground mask
-        foreground_mask_expanded = foreground_mask.expand(-1, num_channels, -1, -1).bool()
-        final_grad = final_grad[foreground_mask_expanded]
 
         # Sum up the gradients in both directions
         loss = torch.mean(final_grad)
