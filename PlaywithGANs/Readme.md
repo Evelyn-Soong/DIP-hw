@@ -71,10 +71,10 @@ python3 setup.py install
 ```
 
 ### Implementation
-Modify based on ['visualizer_drag_gradio.py'](Draggan/visualizer_drag_gradio.py).  
+Modify based on ['visualizer_drag_gradio.py'](Draggan/visualizer_drag_gradio_facealignment.py).  
 
 ```setup
-python3 visualizer_drag_gradio.py
+python3 visualizer_drag_gradio_facealignment.py
 ```
 
 ### Results
