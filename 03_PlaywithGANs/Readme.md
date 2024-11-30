@@ -19,6 +19,11 @@ Adjust the training loss function by applying a [discriminator loss](Pix2Pix/tra
 
 ### cityscapes (2975 images)
 #### Train Results
+
+hw2  
+<img src="pics/train_2.png" alt="alt text" width="800">
+
+new  
 <img src="pics/train_result.png" alt="alt text" width="800">
 
 #### Val Results
