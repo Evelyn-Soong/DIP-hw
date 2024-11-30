@@ -67,11 +67,15 @@ pip install -r requirements.txt
 #### Install
 
 ```setup
-python setup.py install
+python3 setup.py install
 ```
 
 ### Implementation
 Modify based on ['visualizer_drag_gradio.py'](Draggan/visualizer_drag_gradio.py).  
+
+```setup
+python3 visualizer_drag_gradio.py
+```
 
 ### Results
 #### Face Slimming
@@ -83,5 +87,5 @@ Modify based on ['visualizer_drag_gradio.py'](Draggan/visualizer_drag_gradio.py)
 #### Enlarge the eyes
 <img src="pics/bigeye.gif" alt="alt text" width="800">
 
-#### Close the eues
+#### Close the eyes
 <img src="pics/eye.gif" alt="alt text" width="800">
