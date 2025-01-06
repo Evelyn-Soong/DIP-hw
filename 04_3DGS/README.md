@@ -83,3 +83,7 @@ The video file 'debug_rendering.mp4' has also been uploaded [here](pics/).
 ### Compare with the original 3DGS Implementation
 Since we use a pure PyTorch implementation, the training speed and GPU memory usage are far from satisfactory. Also, we do not implement some crucial parts like adaptive Gaussian densification scheme. Run the [original 3DGS implementation](https://github.com/graphdeco-inria/gaussian-splatting) with the same dataset to compare the results.
 
+<img src="pics/3DGS.gif" alt="alt text" width="400">
+
+The original implementation of the 3DGS significantly outperforms our approach, particularly in its accurate reproduction of chair leg details. This implementation preserves the subtle nuances of the design, resulting in a more authentic representation.
+
