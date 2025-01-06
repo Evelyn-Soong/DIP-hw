@@ -21,6 +21,7 @@ Debug the reconstruction by running:
 ```
 xvfb-run --server-args="-screen 0 1024x768x24" python3 debug_mvs_by_projecting_pts.py --data_dir data/chair
 ```
+<img src="pics/r_35_points.png" alt="alt text" width="300">
 
 ### Step 2. A Simplified 3D Gaussian Splatting
 
@@ -74,6 +75,10 @@ After implementation, build the 3DGS model:
 ```
 xvfb-run --server-args="-screen 0 1024x768x24" python3 train.py --colmap_dir data/chair --checkpoint_dir data/chair/checkpoints
 ```
+
+<img src="pics/r_35.png" alt="alt text" width="300">
+
+The video file 'debug_rendering.mp4' has also been uploaded [here](pics/).
 
 ### Compare with the original 3DGS Implementation
 Since we use a pure PyTorch implementation, the training speed and GPU memory usage are far from satisfactory. Also, we do not implement some crucial parts like adaptive Gaussian densification scheme. Run the [original 3DGS implementation](https://github.com/graphdeco-inria/gaussian-splatting) with the same dataset to compare the results.
